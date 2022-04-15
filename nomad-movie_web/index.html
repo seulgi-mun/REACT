@@ -6,48 +6,39 @@
   <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script type="text/babel">
-    const root = document.getElementById("root")
-
+    
+    function Btn({text, fontSize = 12}) {
+      console.log(text, "가 렌더링 됐다!")
+      return (
+        <button 
+          style={{
+            backgroundColor: "#B085FE",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            fontSize,
+          }}>
+          {text}
+        </button>
+      );
+    }
+    // const MemorizedBtn = React.memo(Btn)
+    Btn.propTypes = {
+      text : PropTypes.string.isRequired,
+      fontSize : PropTypes.number,
+    }
     function App() {
-      const [amount, setAmount] = React.useState(0);
-      const [flipped, setFlipped] = React.useState(false);
-      const onChange = (event) => {
-        setAmount(event.target.value)
-      }
-      const reset = () => setAmount(0);
-      const onFlip = () => {
-        reset();
-        setFlipped((current) => !current);
-      }
       return (
         <div>
-          <h1 >Super Converter</h1>
-          <div>
-            <label htmlFor="minutes">Minutes</label>
-            <input 
-              id="minutes" 
-              placeholder="Minutes" 
-              type="number" 
-              value={flipped ? amount * 60 : amount} 
-              onChange={onChange}
-              disabled = {flipped === true}
-            />
-          </div>
-          <label htmlFor="hours">Hours</label>
-          <input 
-            id="hours" 
-            placeholder="Hours" 
-            type="number" 
-            value={flipped ? amount : Math.round(amount / 60)} 
-            disabled = {!flipped}
-            onChange={onChange}
-          />
-          <button onClick={reset}>Reset</button>
-          <button onClick={onFlip}>Flip</button>
-          </div>
-      )
-    } 
+          <Btn text="save changes" fontSize={18} />
+          <Btn text={"Continue"} />
+        </div>
+      );
+    }
+    const root = document.getElementById("root") 
     ReactDOM.render(<App />, root)
   </script>
 </html>

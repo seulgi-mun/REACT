@@ -21,11 +21,38 @@ function App() {
   useEffect (() => {
     console.log('when counter changes ', counter)
   }, [counter]);
-  
+
   useEffect (() => {
     console.log('when both changes ')
   }, [keyword, counter]);
 
+  const [showing, setShowing] = useState(false);
+  const onClick2 = () => setShowing((prev) => !prev);
+
+  function Hello() {
+    // function byeFn() {
+    //   console.log("bye")
+    // }
+    // function hiFn() {
+    //   console.log("created")
+    //   return byeFn;
+    // }
+    useEffect(function () {
+      console.log("hi");
+      return function () {
+        console.log("bye")
+      }
+    }, []);
+
+    useEffect(() => {
+      console.log("hi");
+      return console.log("bye");
+    }, []);
+
+
+    // useEffect(hiFn, []);
+    return <h1>Hello</h1>
+  }
 
   return (
     <div>
@@ -37,6 +64,8 @@ function App() {
       />
       <h1>{counter}</h1>
       <button onClick={onClick}>click me</button>
+      {showing ? <Hello /> : null}
+      <button onClick={onClick2}>{showing ? "Hide" : "Show"}</button>
     </div>
   );
 }
